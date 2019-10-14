@@ -27,6 +27,8 @@ const changePosition = (from) => (instruction) => {
 };
 
 const move = (from) => (to) => zipWith(add)(from)(to);
+const isOut = (board) => (coordinate) => board[0] === coordinate[0] || board[1] === coordinate[1];
+const printOut = (border) => (coordinate) => border.concat(coordinate);
 
 const consumeInstruction = (instruction) => ({coordinates, direction, to}) => {
    const consumption =  cond([

@@ -4,6 +4,7 @@ const { reduce, last } = require('ramda');
 
 const { field, robots } = require('./robots');
 const { positions, changePosition, move, consumeInstruction } = require('./actions');
+const border = [];
 
 const explore = ({ init, instructions }) => {
 
