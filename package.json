@@ -1,0 +1,27 @@
+{
+  "name": "coding_challenge_red_gadger",
+  "version": "1.0.0",
+  "description": "Coding challenge for read gadger",
+  "main": "index.js",
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paker30/coding_challenge_red_gadger.git"
+  },
+  "author": "paker <morenocfrancisco86@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Paker30/coding_challenge_red_gadger/issues"
+  },
+  "homepage": "https://github.com/Paker30/coding_challenge_red_gadger#readme"
+}
