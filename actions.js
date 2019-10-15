@@ -50,7 +50,7 @@ const consumeInstruction = (border) => (instruction) => ({ coordinates, directio
         , [T, () => changePosition(direction)(instruction)]
     ])(instruction);
 
-    return instruction === 'F' ? { coordinates: consumption } : { direction: consumption.direction, to: consumption.coordinate }
+    return instruction === 'F' ? { coordinates: consumption } : { direction: consumption.direction, to: consumption.coordinate };
 };
 
 module.exports = { compass, changePosition, move, consumeInstruction, orientate };
