@@ -2,7 +2,7 @@
 
 const Joi = require('@hapi/joi');
 
-const coordinate = Joi.number().min(0).max(100).required();
+const coordinate = Joi.number().min(0).max(50).required();
 const board = Joi.array().items(coordinate).required();
 const robot = Joi.object({
     init: {
