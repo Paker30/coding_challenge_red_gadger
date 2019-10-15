@@ -1,6 +1,6 @@
 'use strict';
 
-const field = [5, 3];
+const board = [5, 3];
 
 const robots = [{
     init: {
@@ -24,4 +24,4 @@ const robots = [{
     , instructions: "LLFFFLFLFL"
 }];
 
-module.exports = { field, robots };
+module.exports = { board, robots };

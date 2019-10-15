@@ -27,25 +27,30 @@ const changePosition = (from) => (instruction) => {
 };
 
 const move = (from) => (to) => zipWith(add)(from)(to);
-const isOut = (coordinate) => (border) => border[0] === coordinate[0] || border[1] === coordinate[1];
+const isOut = (board) => (coordinate) => board[0] < coordinate[0] || board[1] < coordinate[1];
 const printOut = (border) => (coordinate) => border.push(coordinate);
-const moveAlong = (border) => (coordinates) => (to) => {
+const orientate = (direction) => find(propEq('direction', direction), compass);
+const moveAlong = ({board, border}) => (coordinates) => (to) => {
     const newCoordinate = move(coordinates)(to);
-    const isUnknowPlace = find(isOut(newCoordinate), border);
-    if(isUnknowPlace){
-        printOut(border)(newCoordinate);
-        return newCoordinate;
+    const outOfTheBorder = isOut(board)(newCoordinate);
+    
+    if (outOfTheBorder) {
+        if (!find(equals(newCoordinate), border)){
+            printOut(border)(newCoordinate);
+            return 'LOST';
+        }
+        return coordinate;
     }
-    return {to: {0,0}, direction: coordinate.direction};
+    return newCoordinate;
 };
 
-const consumeInstruction = (border) => (instruction) => ({coordinates, direction, to}) => {
-   const consumption =  cond([
-        [equals('F'), () => moveAlong(border)(coordinates)(to)]
+const consumeInstruction = (border) => (instruction) => ({ coordinates, direction, to }) => {
+    const consumption = cond([
+        [equals('F'), () => moveAlong(border)(coordinates)(to || orientate(direction).coordinate)]
         , [T, () => changePosition(direction)(instruction)]
     ])(instruction);
 
-    return instruction === 'F' ? {coordinates : consumption} : { direction: consumption.direction, to: consumption.coordinate }
+    return instruction === 'F' ? { coordinates: consumption } : { direction: consumption.direction, to: consumption.coordinate }
 };
 
-module.exports = { compass, changePosition, move, consumeInstruction };
+module.exports = { compass, changePosition, move, consumeInstruction, orientate };
