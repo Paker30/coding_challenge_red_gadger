@@ -1,6 +1,6 @@
 'use strict';
 
-const { cond, equals, findIndex, propEq, identity, T, compose, always, zipWith, add } = require('ramda');
+const { cond, equals, findIndex, propEq, identity, T, compose, always, zipWith, add, find } = require('ramda');
 
 const compass = [
     { 'direction': 'N', coordinate: [0, 1] }
@@ -27,12 +27,21 @@ const changePosition = (from) => (instruction) => {
 };
 
 const move = (from) => (to) => zipWith(add)(from)(to);
-const isOut = (board) => (coordinate) => board[0] === coordinate[0] || board[1] === coordinate[1];
-const printOut = (border) => (coordinate) => border.concat(coordinate);
+const isOut = (coordinate) => (border) => border[0] === coordinate[0] || border[1] === coordinate[1];
+const printOut = (border) => (coordinate) => border.push(coordinate);
+const moveAlong = (border) => (coordinates) => (to) => {
+    const newCoordinate = move(coordinates)(to);
+    const isUnknowPlace = find(isOut(newCoordinate), border);
+    if(isUnknowPlace){
+        printOut(border)(newCoordinate);
+        return newCoordinate;
+    }
+    return {to: {0,0}, direction: coordinate.direction};
+};
 
-const consumeInstruction = (instruction) => ({coordinates, direction, to}) => {
+const consumeInstruction = (border) => (instruction) => ({coordinates, direction, to}) => {
    const consumption =  cond([
-        [equals('F'), () => move(coordinates)(to)]
+        [equals('F'), () => moveAlong(border)(coordinates)(to)]
         , [T, () => changePosition(direction)(instruction)]
     ])(instruction);
 
