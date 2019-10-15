@@ -39,7 +39,7 @@ const moveAlong = ({board, border}) => (coordinates) => (to) => {
             printOut(border)(newCoordinate);
             return 'LOST';
         }
-        return coordinate;
+        return coordinates;
     }
     return newCoordinate;
 };
