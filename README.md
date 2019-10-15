@@ -44,7 +44,7 @@ Execute the next command
 npm run start
 ```
 
-If every thing works, you will get an out like this
+If every thing works, you will get an output like this
 
 ```shell
 ┌─────────┬───┬───┬─────┬────────┐
@@ -68,6 +68,6 @@ npm run test
 
 ### About the test coverage and the code
 
-There is no full coverage because I have to refactor some piece of code, the explore function should not be an inpure fuction in order to be able to test it alone, besides it should be in other file so I can required and test it.
+There is no full coverage because I have to refactor some piece of code, the explore function should not be an impure function in order to be able to test it alone, besides it should be in other file so I can required and test it.
 
 There is testing just to show I care about code quality and I probe I know how to handle a testing framework (I know I have not used any library like [Sinon](https://sinonjs.org/))
