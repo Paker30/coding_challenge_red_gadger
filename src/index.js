@@ -4,9 +4,18 @@ const { reduce, last, map, slice, pipe } = require('ramda');
 
 const lastTwo = slice(-2, Infinity);
 const lastOne = slice(-1, Infinity);
-const { board, robots } = require('./robots');
+const input = require('./input');
+const { validInput } = require('./schemas');
 const { positions, changePosition, move, consumeInstruction, orientate } = require('./actions');
+
 const border = [];
+const { value, error } = validInput.validate(input);
+const { board, robots} = value;
+
+if (error) {
+    console.error('The input you have provided is not valid');
+    process.exit(-1);
+}
 
 const explore = ({ init, instructions }) => {
 
