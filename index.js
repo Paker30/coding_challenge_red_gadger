@@ -1,6 +1,6 @@
 'use strict';
 
-const { reduce, last, map, slice } = require('ramda');
+const { reduce, last, map, slice, pipe } = require('ramda');
 
 const lastTwo = slice(-2, Infinity);
 const lastOne = slice(-1, Infinity);
@@ -24,17 +24,17 @@ const explore = ({ init, instructions }) => {
     }, [init])(instructions);
 };
 
-const prettyOutput = (exploration) => {
-    const output = last(exploration).coordinates != 'LOST'
-        ? lastOne(exploration)
-        : lastTwo(exploration);
+const prettyOutput = (exploration) =>
+    (
+        last(exploration).coordinates != 'LOST'
+            ? lastOne(exploration)
+            : lastTwo(exploration)
+    )
+        .reduce((acc, item) => {
+            return item.coordinates === 'LOST'
+                ? acc.concat(['LOST'])
+                : acc.concat([...item.coordinates, item.direction]);
+        }, []);
 
-    const data = reduce((acc, item) => {
-        return item.coordinates === 'LOST'
-            ? acc.concat(['LOST'])
-            : acc.concat([...item.coordinates, item.direction]);
-    }, [], output);
-    return data;
-};
 const explorations = map(explore, robots);
 console.table(map(prettyOutput, explorations));
