@@ -1,7 +1,9 @@
 'use strict';
 
-const { reduce, last } = require('ramda');
+const { reduce, last, map, slice } = require('ramda');
 
+const lastTwo = slice(-2, Infinity);
+const lastOne = slice(-1, Infinity);
 const { board, robots } = require('./robots');
 const { positions, changePosition, move, consumeInstruction, orientate } = require('./actions');
 const border = [];
@@ -13,7 +15,7 @@ const explore = ({ init, instructions }) => {
         if (lastPosition.coordinates === 'LOST') {
             return path;
         }
-        const newPosition = consumeInstruction({board, border})(instruction)(lastPosition);
+        const newPosition = consumeInstruction({ board, border })(instruction)(lastPosition);
         return path.concat([{
             coordinates: newPosition.coordinates || lastPosition.coordinates
             , direction: newPosition.direction || lastPosition.direction
@@ -22,5 +24,17 @@ const explore = ({ init, instructions }) => {
     }, [init])(instructions);
 };
 
-const exploration = explore(robots[1]);
-console.log('exploration', JSON.stringify(last(exploration, null, 4)));
+const prettyOutput = (exploration) => {
+    const output = last(exploration).coordinates != 'LOST'
+        ? lastOne(exploration)
+        : lastTwo(exploration);
+
+    const data = reduce((acc, item) => {
+        return item.coordinates === 'LOST'
+            ? acc.concat(['LOST'])
+            : acc.concat([...item.coordinates, item.direction]);
+    }, [], output);
+    return data;
+};
+const explorations = map(explore, robots);
+console.table(map(prettyOutput, explorations));
