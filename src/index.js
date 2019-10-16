@@ -10,12 +10,13 @@ const { positions, changePosition, move, consumeInstruction, orientate } = requi
 
 const border = [];
 const { value, error } = validInput.validate(input);
-const { board, robots} = value;
 
 if (error) {
     console.error('The input you have provided is not valid');
     process.exit(-1);
 }
+
+const { board, robots} = value;
 
 const explore = ({ init, instructions }) => {
 
